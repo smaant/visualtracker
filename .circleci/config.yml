@@ -40,6 +40,8 @@ jobs:
             path: img.png
 
 workflows:
-    jobs:
-        - build:
-            context: visualtracker
+    version: 2
+    main:
+        jobs:
+            - build:
+                context: visualtracker
