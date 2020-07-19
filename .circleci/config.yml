@@ -19,10 +19,10 @@ jobs:
                 export URL=`cat url.txt`
                 curl -o img.png $URL
                 if [ -d 'prev' ]; then
+                    exit `diff img.png prev/img.png`
+                else
                     mkdir prev
                     cp img.png prev/img.png
-                else
-                    exit `diff img.png prev/img.png`
                 fi
 
         - store_artifacts:
