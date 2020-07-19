@@ -36,5 +36,6 @@ jobs:
             paths:
                 - ./prev
 
-        - run: Compare Images
+        - run: 
+            name: Compare Images
             command: diff img.png prev_img.png
