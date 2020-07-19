@@ -2,40 +2,44 @@ version: 2.1
 jobs:
   build:
     docker:
-        - image: smaant/web-screenshot:1.1
+        - image: smaant/web-screenshot:1.2
 
-        - image: smaant/web-screenshot:1.1
+        - image: smaant/web-screenshot:1.2
 
     steps:
         - checkout
 
-        - restore_cache:
-            key: v1-{{ .Branch }}
+        - run:
+            name: Get Prev
+            command: |
+            export PREV_BUILD_NUM=`curl "https://circleci.com/api/v1.1/project/github/smaant/visualtracker/tree/$CIRCLE_BRANCH?limit=1" -H "Circle-Token:$CIRCLECI_API_TOKEN" | jq '.[].build_num'`
+            if [ ! -z $PREV_BUILD_NUM ]; then
+                export ARTIFACTS=`curl "https://circleci.com/api/v1.1/project/github/smaant/visualtracker/$PREV_BUILD_NUM/artifacts" -H "Circle-Token:$CIRCLECI_API_TOKEN" | jq -cr '.[] | "\(.path), \(.url)"'`
+                mkdir prev
+                while IFS= read -r line; do
+                    IFS=', ' read -r -a array <<< $line
+                    curl -L -o prev/${array[0]} "${array[1]}"
+                done <<< "$ARTIFACTS"
+            fi
 
         - run:
             name: Get Image
             command: |
                 curl -o img.png `cat url.txt`
 
-                if [ ! -d 'prev' ]; then
-                    mkdir prev
-                    cp img.png prev/img.png
-                else
-                    # copy prev image for comparison
-                    cp prev/img.png prev_img.png
-
-                    # replacing prev image with the current one to be cached
+                if [ ! -f 'prev/img.png' ]; then
+                    mkdir -p prev
                     cp img.png prev/img.png
                 fi
+
+        - run: 
+            name: Compare Images
+            command: diff img.png prev/img.png        
 
         - store_artifacts:
             path: img.png
 
-        - save_cache:
-            key: v1-{{ .Branch }}
-            paths:
-                - ./prev
-
-        - run: 
-            name: Compare Images
-            command: diff img.png prev_img.png
+workflows:
+    jobs:
+        - build:
+            context: visualtracker
