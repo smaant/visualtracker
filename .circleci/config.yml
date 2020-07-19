@@ -16,10 +16,16 @@ jobs:
             name: Get Image
             command: |
                 ls
-                export URL=`cat url.txt`
-                curl -o img.png $URL
+                curl -o img.png `cat url.txt`
                 if [ -d 'prev' ]; then
-                    exit `diff img.png prev/img.png`
+                    # copy prev image for comparison
+                    cp prev/img.png prev_img.png
+
+                    # replacing prev image with the current on to be cached
+                    cp img.png prev/img.png
+
+                    # comparing current image and the copied previous one
+                    exit `diff img.png prev_img.png`
                 else
                     mkdir prev
                     cp img.png prev/img.png
