@@ -13,11 +13,14 @@ jobs:
             name: Get Prev
             command: |
                 export PREV_BUILD_NUM=`curl "https://circleci.com/api/v1.1/project/github/smaant/visualtracker/tree/$CIRCLE_BRANCH?limit=1" -H "Circle-Token:$CIRCLECI_API_TOKEN" | jq '.[].build_num'`
+                echo "Prev build: $PREV_BUILD_NUM"
                 if [ ! -z $PREV_BUILD_NUM ]; then
                     export ARTIFACTS=`curl "https://circleci.com/api/v1.1/project/github/smaant/visualtracker/$PREV_BUILD_NUM/artifacts" -H "Circle-Token:$CIRCLECI_API_TOKEN" | jq -c -r '.[] | "\(.path), \(.url)"'`
+                    echo "Artifacts: $ARTIFACTS"
                     mkdir prev
                     while IFS= read -r line; do
                         if [ ! -z $line ]; then
+                            echo "Artifact: $line"
                             IFS=', ' read -r -a array <<< $line
                             curl -L -o prev/${array[0]} "${array[1]}"
                         fi        
@@ -31,6 +34,7 @@ jobs:
 
                 if [ ! -f 'prev/img.png' ]; then
                     mkdir -p prev
+                    echo "Copying img.png into prev/"
                     cp img.png prev/img.png
                 fi
 
