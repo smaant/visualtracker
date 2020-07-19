@@ -43,7 +43,9 @@ jobs:
         - run:
             name: Trigger next build 
             command: |
-                curl -X POST "https://circleci.com/api/v2/project/github/smaant/visualtracker/pipeline" -H "Circle-Token:$CIRCLECI_API_KEY" -H "Content-Type:application/json" -d "{\"branch\": \"$CIRCLE_BRANCH\"}"
+                if ${CONTINUE:-false}; then
+                    curl -X POST "https://circleci.com/api/v2/project/github/smaant/visualtracker/pipeline" -H "Circle-Token:$CIRCLECI_API_KEY" -H "Content-Type:application/json" -d "{\"branch\": \"$CIRCLE_BRANCH\"}"
+                fi
 
         - run: 
             name: Compare Images
