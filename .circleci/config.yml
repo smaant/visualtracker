@@ -10,7 +10,7 @@ jobs:
         - run:
             name: Get Image
             command: |
-                export URL = `cat url.txt`
+                export URL=`cat url.txt`
                 curl -o img.png $URL
 
         - store_artifacts:
