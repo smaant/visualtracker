@@ -25,7 +25,8 @@ jobs:
                     cp img.png prev/img.png
 
                     # comparing current image and the copied previous one
-                    exit `diff img.png prev_img.png`
+                    diff img.png prev_img.png
+                    exit $?
                 else
                     mkdir prev
                     cp img.png prev/img.png
