@@ -2,9 +2,9 @@ version: 2.1
 jobs:
   build:
     docker:
-        - image: smaant/web-screenshot:1.0
+        - image: smaant/web-screenshot:1.1
 
-        - image: smaant/web-screenshot:1.0
+        - image: smaant/web-screenshot:1.1
 
     steps:
         - checkout
