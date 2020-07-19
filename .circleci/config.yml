@@ -14,10 +14,10 @@ jobs:
         - run:
             name: Get Prev
             command: |
-                export PREV_BUILD_NUM=`curl "https://circleci.com/api/v1.1/project/github/smaant/visualtracker/tree/$CIRCLE_BRANCH?limit=1&filter=completed" -H "Circle-Token:$CIRCLECI_API_TOKEN" | jq '.[].build_num'`
+                export PREV_BUILD_NUM=`curl "https://circleci.com/api/v1.1/project/github/smaant/visualtracker/tree/$CIRCLE_BRANCH?limit=1&filter=completed" -H "Circle-Token:$CIRCLECI_API_KEY" | jq '.[].build_num'`
                 echo "Prev build: $PREV_BUILD_NUM"
                 if [ ! -z $PREV_BUILD_NUM ]; then
-                    export ARTIFACTS=`curl "https://circleci.com/api/v1.1/project/github/smaant/visualtracker/$PREV_BUILD_NUM/artifacts" -H "Circle-Token:$CIRCLECI_API_TOKEN" | jq -c -r '.[] | "\(.path), \(.url)"'`
+                    export ARTIFACTS=`curl "https://circleci.com/api/v1.1/project/github/smaant/visualtracker/$PREV_BUILD_NUM/artifacts" -H "Circle-Token:$CIRCLECI_API_KEY" | jq -c -r '.[] | "\(.path), \(.url)"'`
                     echo "Artifacts: $ARTIFACTS"
                     mkdir prev
                     while IFS= read -r line; do
@@ -42,7 +42,7 @@ jobs:
 
         - run:
             name: Trigger next build 
-            command: curl -X POST "https://circleci.com/api/v1.1/project/github/smaant/visualtracker/tree/$CIRCLE_BRANCH" -H "Circle-Token:$CIRCLECI_API_TOKEN"
+            command: curl -X POST "https://circleci.com/api/v1.1/project/github/smaant/visualtracker/tree/$CIRCLE_BRANCH" -H "Circle-Token:$CIRCLECI_API_KEY"
 
         - run: 
             name: Compare Images
