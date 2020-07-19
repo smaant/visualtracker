@@ -14,7 +14,7 @@ jobs:
             command: |
                 export PREV_BUILD_NUM=`curl "https://circleci.com/api/v1.1/project/github/smaant/visualtracker/tree/$CIRCLE_BRANCH?limit=1" -H "Circle-Token:$CIRCLECI_API_TOKEN" | jq '.[].build_num'`
                 if [ ! -z $PREV_BUILD_NUM ]; then
-                    export ARTIFACTS=`curl "https://circleci.com/api/v1.1/project/github/smaant/visualtracker/$PREV_BUILD_NUM/artifacts" -H "Circle-Token:$CIRCLECI_API_TOKEN" | jq -cr '.[] | "\(.path), \(.url)"'`
+                    export ARTIFACTS=`curl "https://circleci.com/api/v1.1/project/github/smaant/visualtracker/$PREV_BUILD_NUM/artifacts" -H "Circle-Token:$CIRCLECI_API_TOKEN" | jq -c -r '.[] | "\(.path), \(.url)"'`
                     mkdir prev
                     while IFS= read -r line; do
                         IFS=', ' read -r -a array <<< $line
