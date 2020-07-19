@@ -17,8 +17,10 @@ jobs:
                     export ARTIFACTS=`curl "https://circleci.com/api/v1.1/project/github/smaant/visualtracker/$PREV_BUILD_NUM/artifacts" -H "Circle-Token:$CIRCLECI_API_TOKEN" | jq -c -r '.[] | "\(.path), \(.url)"'`
                     mkdir prev
                     while IFS= read -r line; do
-                        IFS=', ' read -r -a array <<< $line
-                        curl -L -o prev/${array[0]} "${array[1]}"
+                        if [ ! -z $line ]; then
+                            IFS=', ' read -r -a array <<< $line
+                            curl -L -o prev/${array[0]} "${array[1]}"
+                        fi        
                     done <<< "$ARTIFACTS"
                 fi
 
