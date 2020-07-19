@@ -15,7 +15,7 @@ jobs:
         - run:
             name: Get Image
             command: |
-                ls
+
                 curl -o img.png `cat url.txt`
                 if [ -d 'prev' ]; then
                     # copy prev image for comparison
