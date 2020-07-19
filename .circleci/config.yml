@@ -9,6 +9,8 @@ jobs:
     steps:
         - checkout
 
+        - run: sleep $SLEEP_TIME
+
         - run:
             name: Get Prev
             command: |
@@ -38,9 +40,13 @@ jobs:
                     cp img.png prev/img.png
                 fi
 
+        - run:
+            name: Trigger next build 
+            command: curl -X POST "https://circleci.com/api/v1.1/project/github/smaant/visualtracker/tree/$CIRCLE_BRANCH" -H "Circle-Token:$CIRCLECI_API_TOKEN"
+
         - run: 
             name: Compare Images
-            command: diff img.png prev/img.png        
+            command: diff img.png prev/img.png
 
         - store_artifacts:
             path: img.png
