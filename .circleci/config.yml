@@ -19,9 +19,9 @@ jobs:
                     echo "Artifacts: $ARTIFACTS"
                     mkdir prev
                     while IFS= read -r line; do
-                        if [ ! -z $line ]; then
+                        if [ ! -z "$line" ]; then
                             echo "Artifact: $line"
-                            IFS=', ' read -r -a array <<< $line
+                            IFS=', ' read -r -a array <<< "$line"
                             curl -L -o prev/${array[0]} "${array[1]}"
                         fi        
                     done <<< "$ARTIFACTS"
