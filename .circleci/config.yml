@@ -12,7 +12,7 @@ jobs:
         - run:
             name: Get Prev
             command: |
-                export PREV_BUILD_NUM=`curl "https://circleci.com/api/v1.1/project/github/smaant/visualtracker/tree/$CIRCLE_BRANCH?limit=1" -H "Circle-Token:$CIRCLECI_API_TOKEN" | jq '.[].build_num'`
+                export PREV_BUILD_NUM=`curl "https://circleci.com/api/v1.1/project/github/smaant/visualtracker/tree/$CIRCLE_BRANCH?limit=1&filter=completed" -H "Circle-Token:$CIRCLECI_API_TOKEN" | jq '.[].build_num'`
                 echo "Prev build: $PREV_BUILD_NUM"
                 if [ ! -z $PREV_BUILD_NUM ]; then
                     export ARTIFACTS=`curl "https://circleci.com/api/v1.1/project/github/smaant/visualtracker/$PREV_BUILD_NUM/artifacts" -H "Circle-Token:$CIRCLECI_API_TOKEN" | jq -c -r '.[] | "\(.path), \(.url)"'`
