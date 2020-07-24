@@ -13,7 +13,7 @@ jobs:
     steps:
         - checkout
 
-        - run: sleep $SLEEP_TIME
+        # - run: sleep $SLEEP_TIME
 
         - run:
             name: Get Prev
@@ -30,7 +30,7 @@ jobs:
                             IFS=', ' read -r -a array <<< "$line"
                             curl -L -o prev/${array[0]} "${array[1]}"
                         fi        
-                    done <<< "$ARTIFACTS"
+                    done \<\<\< "$ARTIFACTS"
                 fi
 
         - run:
