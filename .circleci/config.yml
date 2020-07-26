@@ -13,7 +13,20 @@ jobs:
     steps:
         - checkout
 
-        - run: sleep $SLEEP_TIME
+        - run: 
+            name: Sleep
+            command: |
+                export HOUR=`date -utc +"%H"`
+                echo "hour:$HOUR"
+
+                # if current hour >= 7am PST
+                if [ ${HOUR} -ge 14 ] && [ ${HOUR} -le 9 ]; then
+                    echo "MORNING"
+                    # sleep $MORNING_SLEEP_TIME
+                else
+                    echo "DAY"
+                    # sleep $DAY_SLEEP_TIME
+                fi
 
         - run:
             name: Get Prev
@@ -44,13 +57,13 @@ jobs:
                     cp img.png prev/img.png
                 fi
 
-        - run:
-            name: Trigger next build 
-            when: always
-            command: |
-                if ${CONTINUE:-false}; then
-                    curl -X POST "https://circleci.com/api/v2/project/github/smaant/visualtracker/pipeline" -H "Circle-Token:$CIRCLECI_API_KEY" -H "Content-Type:application/json" -d "{\"branch\": \"$CIRCLE_BRANCH\"}"
-                fi
+        # - run:
+        #     name: Trigger next build 
+        #     when: always
+        #     command: |
+        #         if ${CONTINUE:-false}; then
+        #             curl -X POST "https://circleci.com/api/v2/project/github/smaant/visualtracker/pipeline" -H "Circle-Token:$CIRCLECI_API_KEY" -H "Content-Type:application/json" -d "{\"branch\": \"$CIRCLE_BRANCH\"}"
+        #         fi
 
         - run: 
             name: Compare Images
