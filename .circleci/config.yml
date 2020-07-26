@@ -16,7 +16,7 @@ jobs:
         - run: 
             name: Sleep
             command: |
-                export HOUR=`date -utc +"%H"`
+                export HOUR=`date --utc +"%H"`
                 echo "hour:$HOUR"
 
                 # if current hour >= 7am PST
