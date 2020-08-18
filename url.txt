@@ -1,1 +1,1 @@
-http://localhost:2341/?url=https://www.roguefitness.com/rogue-color-echo-bumper-plate&height=2200&offsetX=900&offsetY=400
+http://localhost:2341/?url=https://www.roguefitness.com/york-legacy-iron-plates&height=1400&offsetX=900&offsetY=450
