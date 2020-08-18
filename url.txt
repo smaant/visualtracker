@@ -1,1 +1,1 @@
-http://localhost:2341/?url=https://www.roguefitness.com/rogue-color-echo-bumper-plate&height=2200&offsetX=900&offsetY=400
+http://localhost:2341/?url=https://www.roguefitness.com/rogue-us-mil-sprc-bumper-plates&height=2400&offsetX=900&offsetY=430

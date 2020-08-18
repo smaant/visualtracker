@@ -76,7 +76,7 @@ jobs:
             fail_only: true
             include_job_number_field: false
             include_project_field: false
-            failure_message: https://www.roguefitness.com/rogue-color-echo-bumper-plate
+            failure_message: https://www.roguefitness.com/rogue-us-mil-sprc-bumper-plates 
 
 workflows:
     version: 2
