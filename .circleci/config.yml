@@ -77,7 +77,6 @@ jobs:
            command: |
                export ARTIFACTS=`curl "https://circleci.com/api/v1.1/project/github/smaant/visualtracker/$BUILD_NUM/artifacts" -H "Circle-Token:$CIRCLECI_API_KEY" | jq -c -r '.[0].url"'`
                echo "Artifacts: $ARTIFACTS"
-	
 
         - slack/status:
             fail_only: true
