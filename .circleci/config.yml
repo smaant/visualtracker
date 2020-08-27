@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-    slack: circleci/slack@3.4.2
+    slack: smaant/slack@0.0.1
 
 jobs:
   build:
@@ -72,17 +72,14 @@ jobs:
         - store_artifacts:
             path: img.png
 
-        - run:
-           name: Get current artifact
-           command: |
-               export ARTIFACTS=`curl "https://circleci.com/api/v1.1/project/github/smaant/visualtracker/$CIRCLE_BUILD_NUM/artifacts" -H "Circle-Token:$CIRCLECI_API_KEY" | jq -c -r '.[].url'`
-               echo "Artifacts: $ARTIFACTS"
-
         - slack/status:
             fail_only: true
             include_job_number_field: false
             include_project_field: false
-            failure_message: https://www.roguefitness.com/rogue-color-echo-bumper-plate
+            run: |
+                export IMG=`curl "https://circleci.com/api/v1.1/project/github/smaant/visualtracker/$CIRCLE_BUILD_NUM/artifacts" -H "Circle-Token:$CIRCLECI_API_KEY" | jq -c -r '.[].url'`
+                echo "Artificat img: $IMG"
+            failure_message: $IMG https://www.roguefitness.com/rogue-color-echo-bumper-plate
 
 workflows:
     version: 2
