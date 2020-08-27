@@ -75,7 +75,7 @@ jobs:
         - run:
            name: Get current artifact
            command: |
-               export ARTIFACTS=`curl "https://circleci.com/api/v1.1/project/github/smaant/visualtracker/$CIRCLE_BUILD_NUM/artifacts" -H "Circle-Token:$CIRCLECI_API_KEY"
+               export ARTIFACTS=`curl "https://circleci.com/api/v1.1/project/github/smaant/visualtracker/$CIRCLE_BUILD_NUM/artifacts" -H "Circle-Token:$CIRCLECI_API_KEY"`
                echo "Artifacts: $ARTIFACTS"
 
         - slack/status:
