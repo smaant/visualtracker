@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-    slack: smaant/slack@0.0.2
+    slack: smaant/slack@0.0.3
 
 jobs:
   build:
@@ -79,7 +79,8 @@ jobs:
             run: |
                 export IMG=`curl "https://circleci.com/api/v1.1/project/github/smaant/visualtracker/$CIRCLE_BUILD_NUM/artifacts" -H "Circle-Token:$CIRCLECI_API_KEY" | jq -c -r '.[].url'`
                 echo "Artificat img: $IMG"
-            failure_message: $IMG https://www.roguefitness.com/rogue-color-echo-bumper-plate
+            image_url: $IMG
+            failure_message: https://www.roguefitness.com/rogue-color-echo-bumper-plate
 
 workflows:
     version: 2
