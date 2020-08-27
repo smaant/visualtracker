@@ -13,20 +13,20 @@ jobs:
     steps:
         - checkout
 
-       - run: 
-           name: Sleep
-           command: |
-               export HOUR=`date --utc +"%H"`
-               echo "hour:$HOUR"
+        - run: 
+            name: Sleep
+            command: |
+                export HOUR=`date --utc +"%H"`
+                echo "hour:$HOUR"
 
-               # if current hour >= 7am PST && current hour <= 8am PST
-               if [ ${HOUR} -ge 14 ] && [ ${HOUR} -le 15 ]; then
-                   echo "MORNING"
-                   sleep $MORNING_SLEEP_TIME
-               else
-                   echo "DAY"
-                   sleep $DAY_SLEEP_TIME
-               fi
+                # if current hour >= 7am PST && current hour <= 8am PST
+                if [ ${HOUR} -ge 14 ] && [ ${HOUR} -le 15 ]; then
+                    echo "MORNING"
+                    sleep $MORNING_SLEEP_TIME
+                else
+                    echo "DAY"
+                    sleep $DAY_SLEEP_TIME
+                fi
 
         - run:
             name: Get Prev
