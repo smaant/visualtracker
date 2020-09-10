@@ -80,7 +80,7 @@ jobs:
                 export IMG=`curl "https://circleci.com/api/v1.1/project/github/smaant/visualtracker/$CIRCLE_BUILD_NUM/artifacts" -H "Circle-Token:$CIRCLECI_API_KEY" | jq -c -r '.[].url'`
                 echo "Artificat img: $IMG"
             image_url: $IMG
-            failure_message: https://www.roguefitness.com/rogue-color-echo-bumper-plate
+            failure_message: https://www.roguefitness.com/extra-infinity-j-cup-set
 
 workflows:
     version: 2
